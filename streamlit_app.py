@@ -6,17 +6,27 @@ st.set_page_config(page_icon="💬", layout="wide",
                    page_title="Groq Goes Brrrrrrrr...")
 
 
-def icon(emoji: str):
-    """Shows an emoji as a Notion-style page icon."""
-    st.write(
-        f'<span style="font-size: 78px; line-height: 1">{emoji}</span>',
-        unsafe_allow_html=True,
-    )
+# def icon(emoji: str):
+#     st.image("sunrise.jpg", caption="Sunrise by the mountains")
+
+#     """Shows an emoji as a Notion-style page icon."""
+#     st.write(
+#         f'<span style="font-size: 78px; line-height: 1">{emoji}</span>',
+#         unsafe_allow_html=True,
+#     )
 
 
-icon("🏎️")
+# icon('')
+st.logo("images/WechatIMG727.jpg",icon_image=None)
+st.html("""
+  <style>
+    [alt=Logo] {
+      height: 4rem;
+    }
+  </style>
+        """)
 
-st.subheader("Groq Chat Streamlit App", divider="rainbow", anchor=False)
+st.subheader("DataCleaner", divider="rainbow", anchor=False)
 
 client = Groq(
     api_key=st.secrets["GROQ_API_KEY"],
