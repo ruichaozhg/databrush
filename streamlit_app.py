@@ -2,8 +2,8 @@ import streamlit as st
 from typing import Generator
 from groq import Groq
 
-st.set_page_config(page_icon="💬", layout="wide",
-                   page_title="Groq Goes Brrrrrrrr...")
+st.set_page_config(page_icon="🧼", layout="wide",
+                   page_title="DataCleaner")
 
 
 # def icon(emoji: str):
@@ -94,7 +94,7 @@ def generate_chat_responses(chat_completion) -> Generator[str, None, None]:
 if prompt := st.chat_input("Let me clean your dataset..."):
     st.session_state.messages.append({"role": "user", "content": prompt})
 
-    with st.chat_message("user", avatar='👨‍💻'):
+    with st.chat_message("user", avatar='😃'):
         st.markdown(prompt)
 
     # Fetch response from Groq API
@@ -113,7 +113,7 @@ if prompt := st.chat_input("Let me clean your dataset..."):
         )
 
         # Use the generator function with st.write_stream
-        with st.chat_message("assistant", avatar="🤖"):
+        with st.chat_message("assistant", avatar="🧹"):
             chat_responses_generator = generate_chat_responses(chat_completion)
             full_response = st.write_stream(chat_responses_generator)
     except Exception as e:
