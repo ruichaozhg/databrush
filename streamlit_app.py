@@ -2,7 +2,7 @@ import streamlit as st
 from typing import Generator
 from groq import Groq
 
-st.set_page_config(page_icon="🧹", layout="wide",
+st.set_page_config(page_icon="🧼", layout="wide",
                    page_title="DataCleaner")
 
 
@@ -79,7 +79,7 @@ with col2:
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
-    avatar = '🧼' if message["role"] == "assistant" else '😃'
+    avatar = '🧹' if message["role"] == "assistant" else '😃'
     with st.chat_message(message["role"], avatar=avatar):
         st.markdown(message["content"])
 
@@ -113,7 +113,7 @@ if prompt := st.chat_input("Let me clean your dataset..."):
         )
 
         # Use the generator function with st.write_stream
-        with st.chat_message("assistant", avatar="🧼"):
+        with st.chat_message("assistant", avatar="🧹"):
             chat_responses_generator = generate_chat_responses(chat_completion)
             full_response = st.write_stream(chat_responses_generator)
     except Exception as e:
