@@ -41,6 +41,7 @@ if "selected_model" not in st.session_state:
 
 # Define model details
 models = {
+    "llama3-groq-70b-8192-tool-use-preview":{"name": "llama3-groq-70b-8192-tool-use-preview", "tokens": 8192, "developer": "Meta"},
     "llama3-70b-8192": {"name": "LLaMA3-70b-8192", "tokens": 8192, "developer": "Meta"},
     "llama3-8b-8192": {"name": "LLaMA3-8b-8192", "tokens": 8192, "developer": "Meta"},
     "mixtral-8x7b-32768": {"name": "Mixtral-8x7b-Instruct-v0.1", "tokens": 32768, "developer": "Mistral"},
@@ -54,7 +55,7 @@ with col1:
         "Choose a model:",
         options=list(models.keys()),
         format_func=lambda x: models[x]["name"],
-        index=1  # Default to mixtral
+        index=2  # Default to mixtral
     )
 
 # Detect model change and clear chat history if model has changed
