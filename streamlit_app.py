@@ -2,7 +2,18 @@ import streamlit as st
 from typing import Generator
 from groq import Groq
 
-st.set_page_config(page_icon="🧼", layout="wide",
+
+import streamlit as st
+from streamlit_gsheets import GSheetsConnection
+
+url = "https://docs.google.com/spreadsheets/d/1jxXhwp7O1Tc-ZETzFZBs3_YqhjT7C0veJ-7dk_1MRCA/edit?usp=sharing"
+
+conn = st.connection("gsheets", type=GSheetsConnection)
+
+data = conn.read(spreadsheet=url)
+st.dataframe(data)
+
+st.set_page_config(page_icon="🧼", layout="centered",
                    page_title="DataCleaner")
 
 
@@ -48,9 +59,9 @@ models = {
 }
 
 # Layout for model selection and max_tokens slider
-col1, col2 = st.columns(2)
-
-with col1:
+# col1 = st.columns(1)
+# with st.container():
+with st.container():
     model_option = st.selectbox(
         "Choose a model:",
         options=list(models.keys()),
@@ -65,21 +76,21 @@ if st.session_state.selected_model != model_option:
 
 max_tokens_range = models[model_option]["tokens"]
 
-with col2:
-    # Adjust max_tokens slider dynamically based on the selected model
-    max_tokens = st.slider(
-        "Max Tokens:",
-        min_value=512,  # Minimum value to allow some flexibility
-        max_value=max_tokens_range,
-        # Default value or max allowed if less
-        value=min(32768, max_tokens_range),
-        step=512,
-        help=f"Adjust the maximum number of tokens (words) for the model's response. Max for selected model: {max_tokens_range}"
-    )
+# with col2:
+#     # Adjust max_tokens slider dynamically based on the selected model
+#     max_tokens = st.slider(
+#         "Max Tokens:",
+#         min_value=512,  # Minimum value to allow some flexibility
+#         max_value=max_tokens_range,
+#         # Default value or max allowed if less
+#         value=min(32768, max_tokens_range),
+#         step=512,
+#         help=f"Adjust the maximum number of tokens (words) for the model's response. Max for selected model: {max_tokens_range}"
+#     )
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
-    avatar = '🧹' if message["role"] == "assistant" else '😃'
+    avatar = '🧽️' if message["role"] == "assistant" else '😃'
     with st.chat_message(message["role"], avatar=avatar):
         st.markdown(message["content"])
 
@@ -108,12 +119,12 @@ if prompt := st.chat_input("Let me clean your dataset..."):
                 }
                 for m in st.session_state.messages
             ],
-            max_tokens=max_tokens,
+            max_tokens=max_tokens_range,
             stream=True
         )
 
         # Use the generator function with st.write_stream
-        with st.chat_message("assistant", avatar="🧹"):
+        with st.chat_message("assistant", avatar="🧽️"):
             chat_responses_generator = generate_chat_responses(chat_completion)
             full_response = st.write_stream(chat_responses_generator)
     except Exception as e:
