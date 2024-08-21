@@ -6,12 +6,7 @@ from groq import Groq
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 
-url = "https://docs.google.com/spreadsheets/d/1jxXhwp7O1Tc-ZETzFZBs3_YqhjT7C0veJ-7dk_1MRCA/edit?usp=sharing"
 
-conn = st.connection("gsheets", type=GSheetsConnection)
-
-data = conn.read(spreadsheet=url)
-st.dataframe(data)
 
 st.set_page_config(page_icon="🧼", layout="centered",
                    page_title="DataCleaner")
@@ -66,7 +61,7 @@ with st.container():
         "Choose a model:",
         options=list(models.keys()),
         format_func=lambda x: models[x]["name"],
-        index=2  # Default to mixtral
+        index=1  # Default to mixtral
     )
 
 # Detect model change and clear chat history if model has changed
@@ -103,7 +98,22 @@ def generate_chat_responses(chat_completion) -> Generator[str, None, None]:
 
 
 if prompt := st.chat_input("Let me clean your dataset..."):
-    st.session_state.messages.append({"role": "user", "content": prompt})
+
+    if prompt == "import demo google sheet":
+        url = "https://docs.google.com/spreadsheets/d/1jxXhwp7O1Tc-ZETzFZBs3_YqhjT7C0veJ-7dk_1MRCA/edit?usp=sharing"
+
+        conn = st.connection("gsheets", type=GSheetsConnection)
+
+        data = conn.read(spreadsheet=url)
+        st.markdown(prompt)
+        
+        # change prompt value to the dataset
+        prompt = "\n".join(str(item) for item in [data])
+
+        st.session_state.messages.append({"role": "user", "content": prompt})
+
+    else:
+        st.session_state.messages.append({"role": "user", "content": prompt})
 
     with st.chat_message("user", avatar='😃'):
         st.markdown(prompt)
