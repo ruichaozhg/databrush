@@ -23,7 +23,7 @@ st.set_page_config(page_icon="🧼", layout="centered",
 
 
 # icon('')
-st.logo("images/WechatIMG727.jpg",icon_image=None)
+st.logo("images/logo1.png",icon_image=None)
 st.html("""
   <style>
     [alt=Logo] {
