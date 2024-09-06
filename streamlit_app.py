@@ -32,7 +32,7 @@ st.html("""
   </style>
         """)
 
-st.subheader("DataCleaner", divider="rainbow", anchor=False)
+st.subheader("Data Cleaner", divider="rainbow", anchor=False)
 
 client = Groq(
     api_key=st.secrets["GROQ_API_KEY"],
