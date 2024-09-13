@@ -167,4 +167,5 @@ if prompt := st.chat_input("Let me clean your dataset..."):
         combined_response = "\n".join(str(item) for item in full_response)
         st.session_state.messages.append(
             {"role": "assistant", "content": combined_response})
-streamlit_analytics.stop_tracking(save_to_json="/workspaces/groq_streamlit_demo/file.json")
+# save_to_json="/workspaces/groq_streamlit_demo/file.json"
+streamlit_analytics.stop_tracking()
