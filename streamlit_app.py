@@ -1,16 +1,34 @@
 import streamlit as st
 from typing import Generator
 from groq import Groq
-
-
+import streamlit.components.v1 as components
+import logging
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
+import streamlit_analytics
+
+logging.info("This is a logging test")
+logging.basicConfig(level=logging.INFO)
 
 
+
+streamlit_analytics.start_tracking()
 
 st.set_page_config(page_icon="🧼", layout="centered",
-                   page_title="DataCleaner")
+                page_title="DataCleaner")
+# components.html(
+# """
+# <!-- Google tag (gtag.js) -->
+# <script async src="https://www.googletagmanager.com/gtag/js?id=G-HQ0Y0CEC14"></script>
+# <script>
+#   window.dataLayer = window.dataLayer || [];
+#   function gtag(){dataLayer.push(arguments);}
+#   gtag('js', new Date());
 
+#   gtag('config', 'G-HQ0Y0CEC14');
+# </script>
+# """
+# )
 
 # def icon(emoji: str):
 #     st.image("sunrise.jpg", caption="Sunrise by the mountains")
@@ -25,11 +43,11 @@ st.set_page_config(page_icon="🧼", layout="centered",
 # icon('')
 st.logo("images/logo1.png",icon_image=None)
 st.html("""
-  <style>
+<style>
     [alt=Logo] {
-      height: 4rem;
+    height: 4rem;
     }
-  </style>
+</style>
         """)
 
 st.subheader("Data Cleaner", divider="rainbow", anchor=False)
@@ -149,3 +167,4 @@ if prompt := st.chat_input("Let me clean your dataset..."):
         combined_response = "\n".join(str(item) for item in full_response)
         st.session_state.messages.append(
             {"role": "assistant", "content": combined_response})
+streamlit_analytics.stop_tracking(save_to_json="/workspaces/groq_streamlit_demo/file.json")

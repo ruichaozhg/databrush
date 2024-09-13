@@ -1,3 +1,5 @@
 groq
 streamlit
 st-gsheets-connection
+streamlit-analytics
+logging
