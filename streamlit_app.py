@@ -51,9 +51,10 @@ st.html("""
         """)
 
 st.subheader("Data Cleaner", divider="rainbow", anchor=False)
+groq_api_key = st.text_input("Paste your groq key here:")
 
 client = Groq(
-    api_key=st.secrets["GROQ_API_KEY"],
+    api_key=groq_api_key,
 )
 
 # Initialize chat history and selected model
