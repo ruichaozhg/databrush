@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.INFO)
 streamlit_analytics.start_tracking()
 
 st.set_page_config(page_icon="🧼", layout="centered",
-                page_title="DataCleaner")
+                page_title="FMHY Search")
 # components.html(
 # """
 # <!-- Google tag (gtag.js) -->
@@ -41,7 +41,7 @@ st.set_page_config(page_icon="🧼", layout="centered",
 
 
 # icon('')
-st.logo("images/logo1.png",icon_image=None)
+st.logo("images/logo1.png",icon_image=None,link="https://protrustai.com")
 st.html("""
 <style>
     [alt=Logo] {
@@ -50,7 +50,7 @@ st.html("""
 </style>
         """)
 
-st.subheader("Data Cleaner", divider="rainbow", anchor=False)
+st.subheader("FMHY Search", divider="rainbow", anchor=False)
 groq_api_key = st.text_input("Paste your groq key here:")
 
 client = Groq(
@@ -116,7 +116,7 @@ def generate_chat_responses(chat_completion) -> Generator[str, None, None]:
             yield chunk.choices[0].delta.content
 
 
-if prompt := st.chat_input("Let me clean your dataset..."):
+if prompt := st.chat_input("Search..."):
 
     if prompt == "import demo google sheet":
         url = "https://docs.google.com/spreadsheets/d/1jxXhwp7O1Tc-ZETzFZBs3_YqhjT7C0veJ-7dk_1MRCA/edit?usp=sharing"
