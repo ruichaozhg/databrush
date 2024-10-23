@@ -3,3 +3,4 @@ streamlit
 st-gsheets-connection
 streamlit-analytics
 logging
+langchain_core

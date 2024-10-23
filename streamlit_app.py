@@ -51,10 +51,10 @@ st.html("""
         """)
 
 st.subheader("FMHY Search", divider="rainbow", anchor=False)
-groq_api_key = st.text_input("Paste your groq key here:")
+# groq_api_key = st.text_input("Paste your groq key here:")
 
 client = Groq(
-    api_key=groq_api_key,
+    api_key=st.secrets["GROQ_API_KEY"],
 )
 
 # Initialize chat history and selected model
