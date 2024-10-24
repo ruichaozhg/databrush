@@ -6,6 +6,8 @@ import logging
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import streamlit_analytics
+from PIL import Image
+
 
 logging.info("This is a logging test")
 logging.basicConfig(level=logging.INFO)
@@ -39,18 +41,24 @@ st.set_page_config(page_icon="🧼", layout="centered",
 #         unsafe_allow_html=True,
 #     )
 
+col1, col2, col3 = st.columns((1, 4, 1))
+with col2:
+    st.image(Image.open("images/11.png")")
+# st.logo("images/11.png",link="https://protrustai.com")
+# # Your logo image (replace with your own)
 
-# icon('')
-st.logo("images/logo1.png",icon_image=None,link="https://protrustai.com")
-st.html("""
-<style>
-    [alt=Logo] {
-    height: 4rem;
-    }
-</style>
-        """)
+# st.html("""
+# <style>
+#     [alt=Logo] {
+#     display: flex;
+#     justify-content: center;  /* Centers horizontally */
+#     align-items: center;      /* Centers vertically */
+#     height: 20vh;           /* Full viewport height */
+#     }
+# </style>
+#         """)
 
-st.subheader("FMHY Search", divider="rainbow", anchor=False)
+# st.subheader("FMHY Search", divider="rainbow", anchor=False)
 # groq_api_key = st.text_input("Paste your groq key here:")
 
 client = Groq(
@@ -62,7 +70,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 if "selected_model" not in st.session_state:
-    st.session_state.selected_model = None
+    st.session_state.selected_model = "llama3-70b-8192"
 
 # Define model details
 models = {
@@ -76,17 +84,12 @@ models = {
 # col1 = st.columns(1)
 # with st.container():
 with st.container():
-    model_option = st.selectbox(
-        "Choose a model:",
-        options=list(models.keys()),
-        format_func=lambda x: models[x]["name"],
-        index=1  # Default to mixtral
-    )
 
+    model_option = "llama3-70b-8192"
 # Detect model change and clear chat history if model has changed
-if st.session_state.selected_model != model_option:
-    st.session_state.messages = []
-    st.session_state.selected_model = model_option
+# if st.session_state.selected_model != model_option:
+#     st.session_state.messages = []
+#     st.session_state.selected_model = model_option
 
 max_tokens_range = models[model_option]["tokens"]
 
