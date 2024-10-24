@@ -32,31 +32,11 @@ st.set_page_config(page_icon="🧼", layout="centered",
 # """
 # )
 
-# def icon(emoji: str):
-#     st.image("sunrise.jpg", caption="Sunrise by the mountains")
-
-#     """Shows an emoji as a Notion-style page icon."""
-#     st.write(
-#         f'<span style="font-size: 78px; line-height: 1">{emoji}</span>',
-#         unsafe_allow_html=True,
-#     )
 
 col1, col2, col3 = st.columns((1, 4, 1))
 with col2:
     st.image(Image.open("images/11.png"))
 # st.logo("images/11.png",link="https://protrustai.com")
-# # Your logo image (replace with your own)
-
-# st.html("""
-# <style>
-#     [alt=Logo] {
-#     display: flex;
-#     justify-content: center;  /* Centers horizontally */
-#     align-items: center;      /* Centers vertically */
-#     height: 20vh;           /* Full viewport height */
-#     }
-# </style>
-#         """)
 
 # st.subheader("FMHY Search", divider="rainbow", anchor=False)
 # groq_api_key = st.text_input("Paste your groq key here:")
