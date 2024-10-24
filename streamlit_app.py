@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.INFO)
 streamlit_analytics.start_tracking()
 
 st.set_page_config(page_icon="🧼", layout="centered",
-                page_title="FMHY Search")
+                page_title="Privacy Search")
 # components.html(
 # """
 # <!-- Google tag (gtag.js) -->
@@ -35,7 +35,15 @@ st.set_page_config(page_icon="🧼", layout="centered",
 
 col1, col2, col3 = st.columns((1, 4, 1))
 with col2:
-    st.image(Image.open("images/11.png"))
+    st.image("images/11.png")
+    hide_img_fs = '''
+    <style>
+    button[title="View fullscreen"]{
+        visibility: hidden;}
+    </style>
+    '''
+
+    st.markdown(hide_img_fs, unsafe_allow_html=True)
 # st.logo("images/11.png",link="https://protrustai.com")
 
 # st.subheader("FMHY Search", divider="rainbow", anchor=False)
@@ -99,7 +107,7 @@ def generate_chat_responses(chat_completion) -> Generator[str, None, None]:
             yield chunk.choices[0].delta.content
 
 
-if prompt := st.chat_input("Search..."):
+if prompt := st.chat_input("Search or ask a compliance question..."):
 
     if prompt == "import demo google sheet":
         url = "https://docs.google.com/spreadsheets/d/1jxXhwp7O1Tc-ZETzFZBs3_YqhjT7C0veJ-7dk_1MRCA/edit?usp=sharing"
