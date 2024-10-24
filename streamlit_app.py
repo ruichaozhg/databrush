@@ -43,7 +43,7 @@ st.set_page_config(page_icon="🧼", layout="centered",
 
 col1, col2, col3 = st.columns((1, 4, 1))
 with col2:
-    st.image(Image.open("images/11.png")")
+    st.image(Image.open("images/11.png"))
 # st.logo("images/11.png",link="https://protrustai.com")
 # # Your logo image (replace with your own)
 
