@@ -7,10 +7,30 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import streamlit_analytics
 from PIL import Image
-
-
+from google.oauth2 import service_account
+import gspread
+from datetime import datetime
 logging.info("This is a logging test")
 logging.basicConfig(level=logging.INFO)
+
+
+def append_to_sheet(prompt, generated, answer):
+    """
+    Add to GSheet
+    """
+    credentials = service_account.Credentials.from_service_account_file(
+        st.secrets["GCP_SERVICE_JSON"],
+        scopes=["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/drive']
+    )
+    gc = gspread.authorize(credentials)
+    sh = gc.open_by_url(st.secrets["PRIVATE_GSHEETS_URL"])
+    worksheet = sh.get_worksheet(0) # Assuming you want to write to the first sheet
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    worksheet.append_row([current_time,prompt, generated, answer])
+
+
+
+
 
 
 
@@ -147,6 +167,7 @@ if prompt := st.chat_input("Search or ask a compliance question..."):
         with st.chat_message("assistant", avatar="🧽️"):
             chat_responses_generator = generate_chat_responses(chat_completion)
             full_response = st.write_stream(chat_responses_generator)
+
     except Exception as e:
         st.error(e, icon="🚨")
 
@@ -154,10 +175,14 @@ if prompt := st.chat_input("Search or ask a compliance question..."):
     if isinstance(full_response, str):
         st.session_state.messages.append(
             {"role": "assistant", "content": full_response})
+        append_to_sheet(prompt, True, full_response)
+
     else:
         # Handle the case where full_response is not a string
         combined_response = "\n".join(str(item) for item in full_response)
         st.session_state.messages.append(
             {"role": "assistant", "content": combined_response})
+        append_to_sheet(prompt, True, combined_response)
+
 # save_to_json="/workspaces/groq_streamlit_demo/file.json"
 streamlit_analytics.stop_tracking()
