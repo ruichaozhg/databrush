@@ -18,8 +18,21 @@ def append_to_sheet(prompt, generated, answer):
     """
     Add to GSheet
     """
-    credentials = service_account.Credentials.from_service_account_file(
-        st.secrets["GCP_SERVICE_JSON"],
+
+    service_json = {}
+    service_json["type"] = st.secrets["type"]
+    service_json["project_id"] = st.secrets["project_id"]
+    service_json["private_key_id"] = st.secrets["private_key_id"]
+    service_json["private_key"] = st.secrets["private_key"]
+    service_json["client_email"] = st.secrets["client_email"]
+    service_json["client_id"] = st.secrets["client_id"]
+    service_json["auth_uri"] = st.secrets["auth_uri"]
+    service_json["token_uri"] = st.secrets["token_uri"]
+    service_json["auth_provider_x509_cert_url"] = st.secrets["auth_provider_x509_cert_url"]
+    service_json["client_x509_cert_url"] = st.secrets["client_x509_cert_url"]
+    service_json["universe_domain"] = st.secrets["universe_domain"]
+    credentials = service_account.Credentials.from_service_account_info(
+        service_json,
         scopes=["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/drive']
     )
     gc = gspread.authorize(credentials)
